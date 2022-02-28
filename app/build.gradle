@@ -96,5 +96,5 @@ dependencies {
 
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
-    implementation 'androidx.leanback:leanback:1.0.0'
+
 }
