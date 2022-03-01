@@ -28,6 +28,7 @@ import retrofit2.Response
 //import kotlinx.coroutines.CoroutineScope
 //import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.viewModelScope
+import com.example.android.marsrealestate.network.MarsApiFilter
 import kotlinx.coroutines.launch
 
 
@@ -62,17 +63,17 @@ class OverviewViewModel : ViewModel() {
      * Call getMarsRealEstateProperties() on init so we can display status immediately.
      */
     init {
-        getMarsRealEstateProperties()
+        getMarsRealEstateProperties(MarsApiFilter.SHOW_ALL)
     }
 
     /**
      * Sets the value of the status LiveData to the Mars API status.
      */
-    private fun getMarsRealEstateProperties() {
+    private fun getMarsRealEstateProperties(filter: MarsApiFilter) {
        viewModelScope.launch{
            _status.value=MarsApiStatus.LOADING
             try{
-                var listResult = MarsApi.retrofitService.getProperties()
+                var listResult = MarsApi.retrofitService.getProperties(filter.value)
                 //_response.value = "Success: ${listResult.size} Mars properties retrieved"
                 if (listResult.size > 0) {
                     _properties.value = listResult
@@ -103,4 +104,10 @@ class OverviewViewModel : ViewModel() {
     fun displayPropertyDetailsComplete() {
         _navigateToSelectedProperty.value = null
     }
+
+    fun updateFilter(filter: MarsApiFilter) {
+        getMarsRealEstateProperties(filter)
+    }
+
+
 }
