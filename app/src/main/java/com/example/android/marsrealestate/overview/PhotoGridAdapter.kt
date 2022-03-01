@@ -32,7 +32,7 @@ import com.example.android.marsrealestate.network.MarsProperty
  * data, including computing diffs between lists.
  * @param onClick a lambda that takes the
  */
-class PhotoGridAdapter( ) :
+class PhotoGridAdapter(val onClickListener: OnClickListener ) :
     ListAdapter<MarsProperty, PhotoGridAdapter.MarsPropertyViewHolder>(DiffCallback) {
     /**
      * The MarsPropertyViewHolder constructor takes the binding variable from the associated
@@ -75,9 +75,9 @@ class PhotoGridAdapter( ) :
      */
     override fun onBindViewHolder(holder: MarsPropertyViewHolder, position: Int) {
         val marsProperty = getItem(position)
-//        holder.itemView.setOnClickListener {
-//            onClickListener.onClick(marsProperty)
-//        }
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(marsProperty)
+        }
         holder.bind(marsProperty)
     }
 
